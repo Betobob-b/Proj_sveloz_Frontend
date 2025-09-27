@@ -24,3 +24,18 @@ export interface Project{
     createdAt: string;
     tasks: Task[];
 }
+
+export interface RegisterErrorResponse {
+    username?: string[];
+    email?: string[];
+    password?: string[];
+    password2?: string[];
+    non_field_errors?: string[];
+    general?: string[];
+}
+
+export interface LoginErrorResponse {
+    non_field_errors?: string[];
+    detail?: string;
+}
+

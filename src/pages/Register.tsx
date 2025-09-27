@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import api from '../services/api';
+import axios, { AxiosError } from 'axios';
+import type { RegisterErrorResponse } from '../types/entities';
 
 const RegisterPage = () => {
   const [username, setUsername] = useState('');
@@ -7,7 +9,7 @@ const RegisterPage = () => {
   const [password, setPassword] = useState('');
   const [password2, setPassword2] = useState('');
 
-  const [errors, setErrors] = useState<Record<string, string[]>>({});
+  const [errors, setErrors] = useState<RegisterErrorResponse>({});
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -29,13 +31,20 @@ const RegisterPage = () => {
 
       alert('Registro realizado com sucesso! Faça o login.');
 
-    } catch (err: any) {
-      console.error('Falha no registro:', err.response.data);
-      if (err.response && err.response.data) {
-        setErrors(err.response.data);
-      } else {
-        setErrors({ general: ['Ocorreu um erro de conexão. Tente novamente.'] });
-      }
+    } catch (err: unknown) {
+        if (axios.isAxiosError(err)) {
+          const axiosErr = err as AxiosError<RegisterErrorResponse>;
+          console.error('Falha no registro:', axiosErr.response?.data);
+
+          if (axiosErr.response?.data) {
+            setErrors(axiosErr.response.data);
+          } else {
+            setErrors({ general: ['Ocorreu um erro de conexão. Tente novamente.'] });
+          }
+        } else {
+          console.error('Erro desconhecido:', err);
+          setErrors({ general: ['Erro inesperado.'] });
+        }
     }
   };
 
@@ -43,10 +52,9 @@ const RegisterPage = () => {
     <div>
       <h1>Criar Nova Conta</h1>
       <form onSubmit={handleSubmit}>
-
         {errors.general && <p style={{ color: 'red' }}>{errors.general.join(', ')}</p>}
         {errors.non_field_errors && <p style={{ color: 'red' }}>{errors.non_field_errors.join(', ')}</p>}
-        
+
         <div>
           <label>Nome de Usuário:</label>
           <input
@@ -55,7 +63,7 @@ const RegisterPage = () => {
             onChange={(e) => setUsername(e.target.value)}
             required
           />
-          {errors.username && errors.username.map((error, i) => (
+          {errors.username?.map((error, i) => (
             <p key={i} style={{ color: 'red', margin: 0 }}>{error}</p>
           ))}
         </div>
@@ -68,7 +76,7 @@ const RegisterPage = () => {
             onChange={(e) => setEmail(e.target.value)}
             required
           />
-          {errors.email && errors.email.map((error, i) => (
+          {errors.email?.map((error, i) => (
             <p key={i} style={{ color: 'red', margin: 0 }}>{error}</p>
           ))}
         </div>
@@ -81,7 +89,7 @@ const RegisterPage = () => {
             onChange={(e) => setPassword(e.target.value)}
             required
           />
-          {errors.password && errors.password.map((error, i) => (
+          {errors.password?.map((error, i) => (
             <p key={i} style={{ color: 'red', margin: 0 }}>{error}</p>
           ))}
         </div>
@@ -94,11 +102,11 @@ const RegisterPage = () => {
             onChange={(e) => setPassword2(e.target.value)}
             required
           />
-          {errors.password2 && errors.password2.map((error, i) => (
+          {errors.password2?.map((error, i) => (
             <p key={i} style={{ color: 'red', margin: 0 }}>{error}</p>
           ))}
         </div>
-        
+
         <button type="submit">Registrar</button>
       </form>
     </div>
