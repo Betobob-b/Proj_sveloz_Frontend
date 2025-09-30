@@ -11,14 +11,11 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
-    const [accessToken, setAccessToken] = useState<string | null>(null);
+    const [accessToken, setAccessToken] = useState<string | null>(
+        localStorage.getItem('accessToken')
+    );
 
-    useEffect(() => {
-        const token = localStorage.getItem('accessToken');
-        if (token) {
-        setAccessToken(token);
-        }
-    }, []);
+    
 
     const login = (access: string, refresh: string) => {
         localStorage.setItem('accessToken', access);
