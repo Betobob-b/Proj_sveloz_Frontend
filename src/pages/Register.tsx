@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import api from '../services/api';
 import axios, { AxiosError } from 'axios';
 import type { RegisterErrorResponse } from '../types/entities';
+import styles from './Login.module.css';
 
-const RegisterPage = () => {
+const Register = () => {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -49,11 +50,11 @@ const RegisterPage = () => {
   };
 
   return (
-    <div>
+    <div className={styles.container}>
       <h1>Criar Nova Conta</h1>
-      <form onSubmit={handleSubmit}>
-        {errors.general && <p style={{ color: 'red' }}>{errors.general.join(', ')}</p>}
-        {errors.non_field_errors && <p style={{ color: 'red' }}>{errors.non_field_errors.join(', ')}</p>}
+      <form onSubmit={handleSubmit} className={styles.form}>
+        {errors.general && <p className={styles.error}>{errors.general.join(', ')}</p>}
+        {errors.non_field_errors && <p className={styles.error}>{errors.non_field_errors.join(', ')}</p>}
 
         <div>
           <label>Nome de Usuário:</label>
@@ -62,9 +63,10 @@ const RegisterPage = () => {
             value={username}
             onChange={(e) => setUsername(e.target.value)}
             required
+            className={styles.input}
           />
           {errors.username?.map((error, i) => (
-            <p key={i} style={{ color: 'red', margin: 0 }}>{error}</p>
+            <p key={i} className={styles.error}>{error}</p>
           ))}
         </div>
 
@@ -75,9 +77,10 @@ const RegisterPage = () => {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
+            className={styles.input}
           />
           {errors.email?.map((error, i) => (
-            <p key={i} style={{ color: 'red', margin: 0 }}>{error}</p>
+            <p key={i} className={styles.error}>{error}</p>
           ))}
         </div>
 
@@ -88,9 +91,10 @@ const RegisterPage = () => {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
+            className={styles.input}
           />
           {errors.password?.map((error, i) => (
-            <p key={i} style={{ color: 'red', margin: 0 }}>{error}</p>
+            <p key={i} className={styles.error}>{error}</p>
           ))}
         </div>
 
@@ -101,16 +105,17 @@ const RegisterPage = () => {
             value={password2}
             onChange={(e) => setPassword2(e.target.value)}
             required
+            className={styles.input}
           />
           {errors.password2?.map((error, i) => (
-            <p key={i} style={{ color: 'red', margin: 0 }}>{error}</p>
+            <p key={i} className={styles.error}>{error}</p>
           ))}
         </div>
 
-        <button type="submit">Registrar</button>
+        <button type="submit" className={styles.button}>Registrar</button>
       </form>
     </div>
   );
 };
 
-export default RegisterPage;
+export default Register;

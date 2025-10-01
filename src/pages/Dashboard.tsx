@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react'
 import { Link } from 'react-router-dom';
 import api from '../services/api';
 import type { Project } from '../types/entities';
+import styles from './Dashboard.module.css';
 
 const Dashboard = () => {
     const [projects, setProjects] = useState<Project[]>([]);
@@ -54,40 +55,41 @@ const Dashboard = () => {
         return <p style={{ color: 'red' }}>{error}</p>;
     }
     return (
-        <div>
+        <div className={styles.container}>
             <h1>Dashboard</h1>
             {projects.length === 0 ? (
                 <p>Você ainda não possui nenhum projeto, crie um!</p>
             ) : (
-                <ul>
+                <ul className={styles.projectList}>
                     {projects.map(project => (
-                        <li key={project.id}>
-                            <Link to={`/projects/${project.id}`}>{project.name}</Link>
+                        <li key={project.id} className={styles.projectItem}>
+                            <Link to={`/projects/${project.id}`} className={styles.projectLink}>{project.name}</Link>
                         </li>
                     ))}
                 </ul>
             )}
-            <hr />
-            <h2>Criar Novo Projeto</h2>
-            <form onSubmit={handleCreateProject}>
-                <div>
-                    <label>Nome do Projeto:</label>
-                    <input
-                        type="text"
-                        value={newProjectName}
-                        onChange={(e) => setNewProjectName(e.target.value)}
-                        required
-                />
-                </div>
-                <div>
-                    <label>Descrição:</label>
-                    <textarea
-                        value={newProjectDescription}
-                        onChange={(e) => setNewProjectDescription(e.target.value)}
+            <div className={styles.formContainer}>
+                <h2>Criar Novo Projeto</h2>
+                <form onSubmit={handleCreateProject} >
+                    <div>
+                        <label>Nome do Projeto:</label>
+                        <input
+                            type="text"
+                            value={newProjectName}
+                            onChange={(e) => setNewProjectName(e.target.value)}
+                            required
                     />
-                </div>
-                <button type="submit">Criar Projeto</button>
-            </form>
+                    </div>
+                    <div>
+                        <label>Descrição:</label>
+                        <textarea
+                            value={newProjectDescription}
+                            onChange={(e) => setNewProjectDescription(e.target.value)}
+                        />
+                    </div>
+                    <button type="submit">Criar Projeto</button>
+                </form>
+            </div>
         </div>
     )
 }

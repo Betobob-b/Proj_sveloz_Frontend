@@ -11,9 +11,9 @@ export interface Task{
     title: string;
     description: string | null;
     status: string;
-    dueDate: string | null;
+    due_date: string | null;
     responsible: number;
-    createdAt: string;
+    created_at: string;
 }
 
 export interface Project{
@@ -21,7 +21,7 @@ export interface Project{
     name: string;
     description: string | null;
     creator: number;
-    createdAt: string;
+    created_at: string;
     tasks: Task[];
 }
 

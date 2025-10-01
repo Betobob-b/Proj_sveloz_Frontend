@@ -1,0 +1,100 @@
+.container {
+  max-width: 900px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.header {
+  border-bottom: 1px solid #eee;
+  padding-bottom: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.taskList {
+  list-style-type: none;
+  padding: 0;
+}
+
+.taskItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  border: 1px solid #e0e0e0;
+  border-radius: 5px;
+  margin-bottom: 0.5rem;
+}
+
+.taskInfo {
+  flex-grow: 1;
+}
+
+.taskActions button {
+  margin-left: 0.5rem;
+}
+
+.taskOverdue {
+  border-left: 5px solid #dc3545;
+}
+
+.formContainer {
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid #eee;
+}
+
+.formContainer input,
+.formContainer textarea {
+  width: 95%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 1rem;
+  display: block;
+}
+
+.formContainer button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  transition: background-color 0.2s;
+}
+
+.formContainer button:hover {
+  background-color: #0056b3;
+}
+
+.deleteButton {
+  color: #dc3545;
+  border: 1px solid transparent;
+  margin-left: 10px;
+  font-weight: bold;
+  transition: all 0.2s;
+}
+
+.deleteButton:hover {
+  border-color: #dc3545;
+}
+
+.taskPending {
+  border-left: 5px solid #28a745; /* Verde para "em aberto/pendente" */
+}
+
+.statusBadge {
+  font-weight: bold;
+  font-size: 0.8rem;
+  padding: 3px 8px;
+  border-radius: 12px;
+  color: white;
+  display: inline-block;
+  margin-top: 8px;
+}
+
+/* Cores de fundo para cada etiqueta de status */
+.badgeOverdue { background-color: #dc3545; }
+.badgeInProgress { background-color: #007bff; }
+.badgePending { background-color: #28a745; }

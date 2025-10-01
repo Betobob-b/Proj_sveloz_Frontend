@@ -4,8 +4,9 @@ import api from '../services/api';
 import axios, { AxiosError } from 'axios';
 import type { LoginErrorResponse } from '../types/entities';
 import { useAuth } from '../contexts/AuthContext';
+import styles from './Login.module.css';
 
-const LoginPage = () => {
+const Login = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
@@ -48,10 +49,10 @@ const LoginPage = () => {
   };
 
   return (
-    <div>
+    <div className={styles.container}>
       <h1>Login</h1>
-      <form onSubmit={handleSubmit}>
-        {error && <p style={{ color: 'red' }}>{error}</p>}
+      <form onSubmit={handleSubmit} className={styles.form}>
+        {error && <p className={styles.error}>{error}</p>}
 
         <div>
           <label>Nome de Usuário:</label>
@@ -60,6 +61,7 @@ const LoginPage = () => {
             value={username}
             onChange={(e) => setUsername(e.target.value)}
             required
+            className={styles.input}
           />
         </div>
 
@@ -70,13 +72,14 @@ const LoginPage = () => {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
+            className={styles.input}
           />
         </div>
 
-        <button type="submit">Entrar</button>
+        <button type="submit" className={styles.button}>Entrar</button>
       </form>
     </div>
   );
 };
 
-export default LoginPage;
+export default Login;
